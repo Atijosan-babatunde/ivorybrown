@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Username: "atijosanbabatunde@gmail.com",
             Password: "CD5F04DF742C42D209206C8D52402C4EC821",
             To: "atijosanbabatunde@gmail.com",
-            From: "oluwateezzy03@gmail.com",
+            From: "atijosanbabatunde@gmail.com",
             Subject: subject,
             Body: `
                     <h4>You have a new message from ${name}</h4>
