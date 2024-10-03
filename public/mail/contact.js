@@ -11,10 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const subject = document.getElementById('subject').value;
         const message = document.getElementById('message').value;
 
-        console.log("i got")
-
-        console.log(name, email, subject, message);
-
         const sendMessageButton = document.getElementById('sendMessageButton');
         sendMessageButton.disabled = true;
 
@@ -22,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
         Email.send({
             Host: "smtp.elasticemail.com",
             Username: "atijosanbabatunde@gmail.com",
-            Password: "21B8CDDA03292DB2F2E5BF8C057DA4005C54", // Add your password here
-            To: email,
-            From: "atijosanbabatunde@gmail.com",
+            Password: "CD5F04DF742C42D209206C8D52402C4EC821",
+            To: "atijosanbabatunde@gmail.com",
+            From: "oluwateezzy03@gmail.com",
             Subject: subject,
             Body: `
                     <h4>You have a new message from ${name}</h4>
@@ -32,11 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     <p><strong>Message:</strong><br>${message}</p>
                 `
         }).then(function (response) {
-            console.log(response || "update");
+            console.log(response)
             const successMessage = document.getElementById('success');
             if (response === "OK") {
                 successMessage.innerHTML = "<div class='alert alert-success'><strong>Your message has been sent. </strong></div>";
-                contactForm.reset(); // Reset the form
+                contactForm.reset();
             } else {
                 successMessage.innerHTML = `<div class='alert alert-danger'><strong>Sorry ${name}, it seems that my mail server is not responding. Please try again later!</strong></div>`;
             }
