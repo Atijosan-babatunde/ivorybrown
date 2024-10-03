@@ -1,65 +1,54 @@
-$(function () {
 
-    $("#contactForm input, #contactForm textarea").jqBootstrapValidation({
-        preventSubmit: true,
-        submitError: function ($form, event, errors) {
-        },
-        submitSuccess: function ($form, event) {
-            event.preventDefault();
-            var name = $("input#name").val();
-            var email = $("input#email").val();
-            var subject = $("input#subject").val();
-            var message = $("textarea#message").val();
+document.addEventListener('DOMContentLoaded', function () {
+    const contactForm = document.getElementById('contactForm');
 
-            $this = $("#sendMessageButton");
-            $this.prop("disabled", true);
+    contactForm.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-            $.ajax({
-                url: "contact.php",
-                type: "POST",
-                data: {
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message
-                },
-                cache: false,
-                success: function () {
-                    $('#success').html("<div class='alert alert-success'>");
-                    $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                            .append("</button>");
-                    $('#success > .alert-success')
-                            .append("<strong>Your message has been sent. </strong>");
-                    $('#success > .alert-success')
-                            .append('</div>');
-                    $('#contactForm').trigger("reset");
-                },
-                error: function () {
-                    $('#success').html("<div class='alert alert-danger'>");
-                    $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-                            .append("</button>");
-                    $('#success > .alert-danger').append($("<strong>").text("Sorry " + name + ", it seems that our mail server is not responding. Please try again later!"));
-                    $('#success > .alert-danger').append('</div>');
-                    $('#contactForm').trigger("reset");
-                },
-                complete: function () {
-                    setTimeout(function () {
-                        $this.prop("disabled", false);
-                    }, 1000);
-                }
-            });
-        },
-        filter: function () {
-            return $(this).is(":visible");
-        },
+        // Get form values
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+
+        console.log("i got")
+
+        console.log(name, email, subject, message);
+
+        const sendMessageButton = document.getElementById('sendMessageButton');
+        sendMessageButton.disabled = true;
+
+        // Send email using SMTP.js
+        Email.send({
+            Host: "smtp.elasticemail.com",
+            Username: "atijosanbabatunde@gmail.com",
+            Password: "21B8CDDA03292DB2F2E5BF8C057DA4005C54", // Add your password here
+            To: email,
+            From: "atijosanbabatunde@gmail.com",
+            Subject: subject,
+            Body: `
+                    <h4>You have a new message from ${name}</h4>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Message:</strong><br>${message}</p>
+                `
+        }).then(function (response) {
+            console.log(response || "update");
+            const successMessage = document.getElementById('success');
+            if (response === "OK") {
+                successMessage.innerHTML = "<div class='alert alert-success'><strong>Your message has been sent. </strong></div>";
+                contactForm.reset(); // Reset the form
+            } else {
+                successMessage.innerHTML = `<div class='alert alert-danger'><strong>Sorry ${name}, it seems that my mail server is not responding. Please try again later!</strong></div>`;
+            }
+            sendMessageButton.disabled = false;
+        });
     });
 
-    $("a[data-toggle=\"tab\"]").click(function (e) {
-        e.preventDefault();
-        $(this).tab("show");
+    const inputs = document.querySelectorAll("#contactForm input, #contactForm textarea");
+    inputs.forEach(function (input) {
+        input.addEventListener('focus', function () {
+            document.getElementById('success').innerHTML = '';
+        });
     });
 });
 
-$('#name').focus(function () {
-    $('#success').html('');
-});
