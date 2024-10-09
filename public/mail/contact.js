@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', function () {
         // Send email using SMTP.js
         Email.send({
             Host: "smtp.elasticemail.com",
-            Username: "atijosanbabatunde@gmail.com",
-            Password: "CD5F04DF742C42D209206C8D52402C4EC821",
-            To: "atijosanbabatunde@gmail.com",
-            From: "atijosanbabatunde@gmail.com",
+            Username: "Admin@ivbtech.com",
+            Password: "EC9A7625ECB5DEF872ADC903000A9682730A",
+            To: "Admin@ivbtech.com",
+            From: "Admin@ivbtech.com",
             Subject: subject,
             Body: `
                     <h4>You have a new message from ${name}</h4>
