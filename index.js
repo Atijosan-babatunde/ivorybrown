@@ -60,8 +60,8 @@ app.post('/mail', (req, res) => {
     const { name, email, subject, message } = req.body;
 
     const mailOptions = {
-        from: email,
-        to: 'admin@example.com',
+        from: process.env.EMAIL,
+        to: "kifoboh610@adosnan.com",
         subject: subject,
         text: `You have a new message from ${name} (${email})\n\n${message}`,
         html: `<h4>You have a new message from ${name}</h4>

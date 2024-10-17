@@ -15,30 +15,28 @@ document.addEventListener('DOMContentLoaded', function () {
         sendMessageButton.disabled = true;
 
         // Send data to the backend
-        fetch('/mail', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, subject, message })
+        axios.post('/mail', {
+            name,
+            email,
+            subject,
+            message
         })
-        .then(response => response.json())
-        .then(data => {
-            const successMessage = document.getElementById('success');
-            if (data.success) {
-                successMessage.innerHTML = "<div class='alert alert-success'><strong>Your message has been sent. </strong></div>";
-                contactForm.reset();
-            } else {
-                successMessage.innerHTML = `<div class='alert alert-danger'><strong>Sorry ${name}, there was an error sending your message. Please try again later!</strong></div>`;
-            }
-            sendMessageButton.disabled = false;
-        })
-        .catch(error => {
-            console.log(error);
-            const successMessage = document.getElementById('success');
-            successMessage.innerHTML = `<div class='alert alert-danger'><strong>Sorry ${name}, something went wrong. Please try again later!</strong></div>`;
-            sendMessageButton.disabled = false;
-        });
+            .then(response => {
+                const successMessage = document.getElementById('success');
+                if (response.data.success) {
+                    successMessage.innerHTML = "<div class='alert alert-success'><strong>Your message has been sent. </strong></div>";
+                    contactForm.reset();
+                } else {
+                    successMessage.innerHTML = `<div class='alert alert-danger'><strong>Sorry ${name}, there was an error sending your message. Please try again later!</strong></div>`;
+                }
+                sendMessageButton.disabled = false;
+            })
+            .catch(error => {
+                console.log(error);
+                const successMessage = document.getElementById('success');
+                successMessage.innerHTML = `<div class='alert alert-danger'><strong>Sorry ${name}, something went wrong. Please try again later!</strong></div>`;
+                sendMessageButton.disabled = false;
+            });
     });
 
     const inputs = document.querySelectorAll("#contactForm input, #contactForm textarea");
