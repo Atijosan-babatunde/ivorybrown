@@ -14,28 +14,29 @@ document.addEventListener('DOMContentLoaded', function () {
         const sendMessageButton = document.getElementById('sendMessageButton');
         sendMessageButton.disabled = true;
 
-        // Send email using SMTP.js
-        Email.send({
-            Host: "smtp.elasticemail.com",
-            Username: "Admin@ivbtech.com",
-            Password: "EC9A7625ECB5DEF872ADC903000A9682730A",
-            To: "Admin@ivbtech.com",
-            From: "Admin@ivbtech.com",
-            Subject: subject,
-            Body: `
-                    <h4>You have a new message from ${name}</h4>
-                    <p><strong>Email:</strong> ${email}</p>
-                    <p><strong>Message:</strong><br>${message}</p>
-                `
-        }).then(function (response) {
-            console.log(response)
+        // Send data to the backend
+        fetch('/mail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, subject, message })
+        })
+        .then(response => response.json())
+        .then(data => {
             const successMessage = document.getElementById('success');
-            if (response === "OK") {
+            if (data.success) {
                 successMessage.innerHTML = "<div class='alert alert-success'><strong>Your message has been sent. </strong></div>";
                 contactForm.reset();
             } else {
-                successMessage.innerHTML = `<div class='alert alert-danger'><strong>Sorry ${name}, it seems that my mail server is not responding. Please try again later!</strong></div>`;
+                successMessage.innerHTML = `<div class='alert alert-danger'><strong>Sorry ${name}, there was an error sending your message. Please try again later!</strong></div>`;
             }
+            sendMessageButton.disabled = false;
+        })
+        .catch(error => {
+            console.log(error);
+            const successMessage = document.getElementById('success');
+            successMessage.innerHTML = `<div class='alert alert-danger'><strong>Sorry ${name}, something went wrong. Please try again later!</strong></div>`;
             sendMessageButton.disabled = false;
         });
     });
@@ -47,4 +48,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
 
