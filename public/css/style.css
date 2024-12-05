@@ -148,6 +148,25 @@ address {
   line-height: inherit;
 }
 
+.dgrid{
+  padding: 1em;
+  position: relative;
+  overflow: hidden;
+  height: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: .3s;
+  background-color: #f6f6f6;
+}
+
+.icotop{
+  justify-content: center;
+  display: flex;
+  margin: auto;
+}
+
 ol,
 ul,
 dl {
@@ -361,6 +380,8 @@ legend {
   color: inherit;
   white-space: normal;
 }
+
+
 
 @media (max-width: 1200px) {
   legend {
@@ -9573,7 +9594,7 @@ h6,
   right: 0;
   bottom: 0;
   text-align: left;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 

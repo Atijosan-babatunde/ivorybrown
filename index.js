@@ -61,7 +61,7 @@ app.post('/mail', (req, res) => {
 
     const mailOptions = {
         from: process.env.EMAIL,
-        to: "kifoboh610@adosnan.com",
+        to: process.env.ORGANIZATION_EMAIL,
         subject: subject,
         text: `You have a new message from ${name} (${email})\n\n${message}`,
         html: `<h4>You have a new message from ${name}</h4>
