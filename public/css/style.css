@@ -596,8 +596,17 @@ mark,
 }
 
 .img-fluid {
-  max-width: 100%;
+  /* max-width: 100%;
+  height: auto; */
+
+  width: 100vw; /* Full width of the viewport */
   height: auto;
+  
+  background-size: cover; /* Ensure the image covers the entire area */
+  display: flex; /* Optional: to center content */
+  justify-content: center; /* Optional: to horizontally center content */
+  align-items: center; /* Optional: to vertically center content */
+  margin: 0; /* Remove default margins if necessary */
 }
 
 .img-thumbnail {
